@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.8.34511.84
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "eXChanger.POC.Api", "eXChanger.POC.Api\eXChanger.POC.Api.csproj", "{EF9110EB-F6AA-4A1A-8556-96DA9E5D0386}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "eXChanger.POC.Infrastructure.Built", "eXChanger.POC.Infrastructure.Built\eXChanger.POC.Infrastructure.Built.csproj", "{127469C0-6324-405F-AFDF-AE4BEFC24596}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{EF9110EB-F6AA-4A1A-8556-96DA9E5D0386}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EF9110EB-F6AA-4A1A-8556-96DA9E5D0386}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EF9110EB-F6AA-4A1A-8556-96DA9E5D0386}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EF9110EB-F6AA-4A1A-8556-96DA9E5D0386}.Release|Any CPU.Build.0 = Release|Any CPU
+		{127469C0-6324-405F-AFDF-AE4BEFC24596}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{127469C0-6324-405F-AFDF-AE4BEFC24596}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{127469C0-6324-405F-AFDF-AE4BEFC24596}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{127469C0-6324-405F-AFDF-AE4BEFC24596}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {CE6DAD12-C811-4727-845A-6C82183E1C31}
+	EndGlobalSection
+EndGlobal
