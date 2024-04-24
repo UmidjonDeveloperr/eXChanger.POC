@@ -1,18 +1,22 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using eXChanger.POC.Brokers.Sheets;
+using eXChanger.POC.Brokers.Storages;
+using eXChanger.POC.Services.Coordinations;
+using eXChanger.POC.Services.Foundations.ExternalPersons;
+using eXChanger.POC.Services.Foundations.Persons;
+using eXChanger.POC.Services.Foundations.Pets;
+using eXChanger.POC.Services.Orchestrations.ExternalPersons;
+using eXChanger.POC.Services.Processings.Pets;
+using eXChanger.POC.Services.Orchestrations.PersonPets;
+using eXChanger.POC.Services.Processings.Persons;
+using eXChanger.POC.Services.Processings.ExternalPersons;
 
-namespace eXChanger.POC.Api
+namespace eXChanger.POC
 {
 	public class Startup
 	{
@@ -23,37 +27,78 @@ namespace eXChanger.POC.Api
 
 		public IConfiguration Configuration { get; }
 
-		// This method gets called by the runtime. Use this method to add services to the container.
 		public void ConfigureServices(IServiceCollection services)
 		{
 
 			services.AddControllers();
+			AddBrokers(services);
+			AddFoundationServices(services);
+			AddProcessingServices(services);
+			AddOrchestrationServices(services);
+			AddCoordinationServices(services);
+
 			services.AddSwaggerGen(c =>
 			{
-				c.SwaggerDoc("v1", new OpenApiInfo { Title = "eXChanger.POC.Api", Version = "v1" });
+				c.SwaggerDoc(
+					name: "v1",
+					info: new OpenApiInfo
+					{
+						Title = "eXChanger.POC",
+						Version = "v1"
+					});
 			});
 		}
 
-		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
 		public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
 		{
 			if (env.IsDevelopment())
 			{
 				app.UseDeveloperExceptionPage();
 				app.UseSwagger();
-				app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "eXChanger.POC.Api v1"));
+
+				app.UseSwaggerUI(config =>
+					config.SwaggerEndpoint(
+						url: "/swagger/v1/swagger.json",
+						name: "eXChanger.POC v1"));
 			}
 
 			app.UseHttpsRedirection();
-
 			app.UseRouting();
-
 			app.UseAuthorization();
 
 			app.UseEndpoints(endpoints =>
-			{
-				endpoints.MapControllers();
-			});
+				endpoints.MapControllers());
+		}
+
+		private static void AddBrokers(IServiceCollection services)
+		{
+			services.AddTransient<IStorageBroker, StorageBroker>();
+			services.AddTransient<ISheetBroker, SheetBroker>();
+		}
+
+		private static void AddFoundationServices(IServiceCollection services)
+		{
+			services.AddTransient<IPersonService, PersonService>();
+			services.AddTransient<IPetService, PetService>();
+			services.AddTransient<IExternalPersonService, ExternalPersonService>();
+		}
+
+		private static void AddProcessingServices(IServiceCollection services)
+		{
+			services.AddTransient<IPersonProcessingService, PersonProcessingService>();
+			services.AddTransient<IPetProcessingService, PetProcessingService>();
+			services.AddTransient<IExternalPersonProcessingService, ExternalPersonProcessingService>();
+		}
+
+		private static void AddOrchestrationServices(IServiceCollection services)
+		{
+			services.AddTransient<IPersonPetOrchestrationService, PersonPetOrchestrationService>();
+			services.AddTransient<IExternalPersonOrchestrationService, ExternalPersonOrchestrationService>();
+		}
+
+		private static void AddCoordinationServices(IServiceCollection services)
+		{
+			services.AddTransient<IExternalPersonWithPetsCoordinationService, ExternalPersonWithPetsCoordinationService>();
 		}
 	}
 }
