@@ -2,11 +2,13 @@
 using eXChanger.POC.Brokers.Storages;
 using eXChanger.POC.Models.Foundations.Persons;
 using eXChanger.POC.Services.Foundations.Persons;
+using Microsoft.Data.SqlClient;
 using Moq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 using Tynamix.ObjectFiller;
@@ -33,6 +35,12 @@ namespace eXChanger.POC.Tests.Unit.Services.Foundations.Persons
 
 		private Expression<Func<Xeption, bool>> SameExceptionAs(Xeption expectedException) =>
 			actualException => actualException.SameExceptionAs(expectedException);
+
+		private static SqlException GetSqlError() =>
+			(SqlException)FormatterServices.GetUninitializedObject(typeof(SqlException));
+
+		private static string GetRandomString() =>
+			new MnemonicString().GetValue().ToString();
 
 		private static Person CreateRandomPerson() =>
 			CreatePersonFiller(date: GetRandomDateTimeOffset).Create();
