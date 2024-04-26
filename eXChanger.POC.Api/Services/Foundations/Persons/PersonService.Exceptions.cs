@@ -44,10 +44,10 @@ namespace eXChanger.POC.Services.Foundations.Persons
 			}
 			catch (Exception exception)
 			{
-				var failedGuestServiceException =
+				var failedPersonServiceException =
 					new FailedPersonServiceException(exception);
 
-				throw CreateAndLogPersonDependencyServiceException(failedGuestServiceException);
+				throw CreateAndLogPersonDependencyServiceException(failedPersonServiceException);
 			}
 		}
 
@@ -62,6 +62,12 @@ namespace eXChanger.POC.Services.Foundations.Persons
 				var failedPersonStorageException = new FailedPersonStorageException(sqlException);
 
 				throw CreateAndLogCriticalException(failedPersonStorageException);
+			}
+			catch(Exception exception)
+			{
+				var failedPersonServiceException = new FailedPersonServiceException(exception);
+
+				throw CreateAndLogPersonDependencyServiceException(failedPersonServiceException);
 			}
 		}
 
