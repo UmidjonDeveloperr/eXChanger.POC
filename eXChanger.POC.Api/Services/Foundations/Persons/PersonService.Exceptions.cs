@@ -21,6 +21,10 @@ namespace eXChanger.POC.Services.Foundations.Persons
 			{
 				throw CreateAndLogValidationException(nullPersonExcepsion);
 			}
+			catch (InvalidPersonException invalidPersonException)
+			{
+				throw CreateAndLogValidationException(invalidPersonException);
+			}
 		}
 
 		private IQueryable<Person> TryCatch(ReturningPersonsFunction returningPersonsFunction)

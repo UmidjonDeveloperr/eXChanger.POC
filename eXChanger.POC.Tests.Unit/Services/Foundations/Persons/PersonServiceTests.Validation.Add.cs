@@ -56,9 +56,6 @@ namespace eXChanger.POC.Tests.Unit.Services.Foundations.Persons
 			invalidPersonException.AddData(key: nameof(Person.Name),
 				values: "Text is invalid");
 
-			invalidPersonException.AddData(key: nameof(Person.Age),
-				values: "Age is required");
-
 			var expectedPersonValidationExpected =
 				new PersonValidationException(invalidPersonException);
 
@@ -70,8 +67,8 @@ namespace eXChanger.POC.Tests.Unit.Services.Foundations.Persons
 			await Assert.ThrowsAsync<PersonValidationException>(() => addPersonTask.AsTask());
 
 			this.loggingBrokerMock.Verify(broker =>
-			  broker.LogError(It.Is(SameExceptionAs(expectedPersonValidationExpected))),
-			  Times.Once());
+				broker.LogError(It.Is(SameExceptionAs(expectedPersonValidationExpected))), 
+				Times.Once());
 
 			this.storageBrokerMock.Verify(broker =>
 			  broker.AddPersonAsync(It.IsAny<Person>()),
