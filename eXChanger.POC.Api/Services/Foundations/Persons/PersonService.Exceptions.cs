@@ -1,12 +1,8 @@
-﻿using EFxceptions.Models.Exceptions;
-using Microsoft.Data.SqlClient;
+﻿using eXChanger.POC.Models.Foundations.Persons;
+using eXChanger.POC.Models.Foundations.Persons.Exceptions;
 using System.Linq;
 using System.Threading.Tasks;
-using System;
 using Xeptions;
-using eXChanger.POC.Models.Foundations.Persons;
-using eXChanger.POC.Api.Models.Foundations.Persons.Exceptions;
-using eXChanger.POC.Services.Foundations.Persons;
 
 namespace eXChanger.POC.Services.Foundations.Persons
 {
@@ -17,7 +13,14 @@ namespace eXChanger.POC.Services.Foundations.Persons
 
 		private async ValueTask<Person> TryCatch(ReturningPersonFunction returningPersonFunction)
 		{
-			return await returningPersonFunction();
+			try
+			{
+				return await returningPersonFunction();
+			}
+			catch (NullPersonException nullPersonExcepsion)
+			{
+				throw CreateAndLogValidationException(nullPersonExcepsion);
+			}
 		}
 
 		private IQueryable<Person> TryCatch(ReturningPersonsFunction returningPersonsFunction)

@@ -1,6 +1,6 @@
 ﻿using Xeptions;
 
-namespace eXChanger.POC.Api.Models.Foundations.Persons.Exceptions
+namespace eXChanger.POC.Models.Foundations.Persons.Exceptions
 {
 	public class InvalidPersonException : Xeption
 	{

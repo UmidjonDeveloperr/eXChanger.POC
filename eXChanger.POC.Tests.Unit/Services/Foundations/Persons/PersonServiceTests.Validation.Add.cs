@@ -1,13 +1,7 @@
-﻿using Moq;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Xunit.Abstractions;
+﻿using eXChanger.POC.Models.Foundations.Persons;
+using eXChanger.POC.Models.Foundations.Persons.Exceptions;
+using Moq;
 using Xunit;
-using eXChanger.POC.Models.Foundations.Persons;
-using eXChanger.POC.Api.Models.Foundations.Persons.Exceptions;
 
 namespace eXChanger.POC.Tests.Unit.Services.Foundations.Persons
 {
@@ -19,7 +13,7 @@ namespace eXChanger.POC.Tests.Unit.Services.Foundations.Persons
 			// given
 			Person nullPerson = null;
 			NullPersonException nullPersonException = new();
-
+				
 			PersonValidationException expectedPersonValidationException =
 				new(nullPersonException);
 

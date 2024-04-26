@@ -1,4 +1,4 @@
-﻿using eXChanger.POC.Api.Brokers.Loggings;
+﻿using eXChanger.POC.Brokers.Loggings;
 using eXChanger.POC.Brokers.Storages;
 using eXChanger.POC.Services.Foundations.Persons;
 using Moq;
@@ -18,11 +18,14 @@ namespace eXChanger.POC.Tests.Unit.Services.Foundations.Persons
 		private readonly Mock<ILoggingBroker> loggingBrokerMock;
 		private readonly IPersonService personService;
 
-		public PersonServiceTests(Mock<IStorageBroker> storageBrokerMock, Mock<ILoggingBroker> loggingBrokerMock, IPersonService personService)
+		public PersonServiceTests()
 		{
-			this.storageBrokerMock = storageBrokerMock;
-			this.loggingBrokerMock = loggingBrokerMock;
-			this.personService = personService;
+			this.storageBrokerMock = new Mock<IStorageBroker>();
+			this.loggingBrokerMock = new Mock<ILoggingBroker>();
+
+			this.personService =
+				new PersonService(storageBroker: this.storageBrokerMock.Object,
+				loggingBroker: this.loggingBrokerMock.Object);
 		}
 
 		private Expression<Func<Xeption, bool>> SameExceptionAs(Xeption expectedException) =>
