@@ -30,10 +30,10 @@ namespace eXChanger.POC.Services.Foundations.Persons
 			}
 			catch (SqlException sqlException)
 			{
-				var failedGuestStorageException =
+				var failedPersonStorageException =
 					new FailedPersonStorageException(sqlException);
 
-				throw CreateAndLogCriticalException(failedGuestStorageException);
+				throw CreateAndLogCriticalException(failedPersonStorageException);
 			}
 			catch (DuplicateKeyException duplicateKeyException)
 			{
@@ -53,7 +53,16 @@ namespace eXChanger.POC.Services.Foundations.Persons
 
 		private IQueryable<Person> TryCatch(ReturningPersonsFunction returningPersonsFunction)
 		{
-			return returningPersonsFunction();
+			try
+			{
+				return returningPersonsFunction();
+			}
+			catch(SqlException sqlException)
+			{
+				var failedPersonStorageException = new FailedPersonStorageException(sqlException);
+
+				throw CreateAndLogCriticalException(failedPersonStorageException);
+			}
 		}
 
 		private PersonValidationException CreateAndLogValidationException(Xeption exception)
