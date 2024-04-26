@@ -36,6 +36,13 @@ namespace eXChanger.POC.Tests.Unit.Services.Foundations.Persons
 		private Expression<Func<Xeption, bool>> SameExceptionAs(Xeption expectedException) =>
 			actualException => actualException.SameExceptionAs(expectedException);
 
+		private static int GetRandomNumber() =>
+			new IntRange(min: 0, max: 9).GetValue();
+
+		private static IQueryable<Person> CreateRandomPersons() =>
+			CreatePersonFiller(date: GetRandomDateTimeOffset)
+			.Create(count: GetRandomNumber()).AsQueryable<Person>();
+
 		private static SqlException GetSqlError() =>
 			(SqlException)FormatterServices.GetUninitializedObject(typeof(SqlException));
 
