@@ -1,5 +1,6 @@
 ﻿using eXChanger.POC.Models.Foundations.Persons;
 using eXChanger.POC.Models.Foundations.Persons.Exceptions;
+using Microsoft.Data.SqlClient;
 using System.Linq;
 using System.Threading.Tasks;
 using Xeptions;
@@ -24,6 +25,13 @@ namespace eXChanger.POC.Services.Foundations.Persons
 			catch (InvalidPersonException invalidPersonException)
 			{
 				throw CreateAndLogValidationException(invalidPersonException);
+			}
+			catch (SqlException sqlException)
+			{
+				var failedGuestStorageException =
+					new FailedPersonStorageException(sqlException);
+
+				throw CreateAndLogCriticalException(failedGuestStorageException);
 			}
 		}
 
