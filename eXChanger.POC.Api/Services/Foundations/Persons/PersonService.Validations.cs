@@ -1,5 +1,5 @@
-﻿using eXChanger.POC.Api.Models.Foundations.Persons.Exceptions;
-using eXChanger.POC.Models.Foundations.Persons;
+﻿using eXChanger.POC.Models.Foundations.Persons;
+using eXChanger.POC.Models.Foundations.Persons.Exceptions;
 using FluentAssertions.Execution;
 using System;
 
@@ -51,7 +51,7 @@ namespace eXChanger.POC.Services.Foundations.Persons
 
 		private static dynamic IsInvalid(int age) => new
 		{
-			Condition = age == 0,
+			Condition = age == null,
 			Message = "Age is invalid"
 		};
 

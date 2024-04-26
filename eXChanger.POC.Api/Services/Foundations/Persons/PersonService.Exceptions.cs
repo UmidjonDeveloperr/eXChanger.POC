@@ -1,12 +1,11 @@
 ﻿using EFxceptions.Models.Exceptions;
+using eXChanger.POC.Models.Foundations.Persons;
+using eXChanger.POC.Models.Foundations.Persons.Exceptions;
 using Microsoft.Data.SqlClient;
+using System;
 using System.Linq;
 using System.Threading.Tasks;
-using System;
 using Xeptions;
-using eXChanger.POC.Models.Foundations.Persons;
-using eXChanger.POC.Api.Models.Foundations.Persons.Exceptions;
-using eXChanger.POC.Services.Foundations.Persons;
 
 namespace eXChanger.POC.Services.Foundations.Persons
 {
@@ -17,12 +16,59 @@ namespace eXChanger.POC.Services.Foundations.Persons
 
 		private async ValueTask<Person> TryCatch(ReturningPersonFunction returningPersonFunction)
 		{
-			return await returningPersonFunction();
+			try
+			{
+				return await returningPersonFunction();
+			}
+			catch (NullPersonException nullPersonExcepsion)
+			{
+				throw CreateAndLogValidationException(nullPersonExcepsion);
+			}
+			catch (InvalidPersonException invalidPersonException)
+			{
+				throw CreateAndLogValidationException(invalidPersonException);
+			}
+			catch (SqlException sqlException)
+			{
+				var failedPersonStorageException =
+					new FailedPersonStorageException(sqlException);
+
+				throw CreateAndLogCriticalException(failedPersonStorageException);
+			}
+			catch (DuplicateKeyException duplicateKeyException)
+			{
+				var alreadyExistGuestException =
+					new AlreadyExistPersonException(duplicateKeyException);
+
+				throw CreateAndLogDuplicateKeyException(alreadyExistGuestException);
+			}
+			catch (Exception exception)
+			{
+				var failedPersonServiceException =
+					new FailedPersonServiceException(exception);
+
+				throw CreateAndLogPersonDependencyServiceException(failedPersonServiceException);
+			}
 		}
 
 		private IQueryable<Person> TryCatch(ReturningPersonsFunction returningPersonsFunction)
 		{
-			return returningPersonsFunction();
+			try
+			{
+				return returningPersonsFunction();
+			}
+			catch(SqlException sqlException)
+			{
+				var failedPersonStorageException = new FailedPersonStorageException(sqlException);
+
+				throw CreateAndLogCriticalException(failedPersonStorageException);
+			}
+			catch(Exception exception)
+			{
+				var failedPersonServiceException = new FailedPersonServiceException(exception);
+
+				throw CreateAndLogPersonDependencyServiceException(failedPersonServiceException);
+			}
 		}
 
 		private PersonValidationException CreateAndLogValidationException(Xeption exception)

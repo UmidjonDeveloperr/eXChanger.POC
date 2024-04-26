@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
-using eXChanger.POC.Api.Brokers.Loggings;
+using eXChanger.POC.Brokers.Loggings;
 using eXChanger.POC.Brokers.Storages;
 using eXChanger.POC.Models.Foundations.Persons;
 

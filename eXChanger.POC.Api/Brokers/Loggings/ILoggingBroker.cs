@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace eXChanger.POC.Api.Brokers.Loggings
+namespace eXChanger.POC.Brokers.Loggings
 {
 	public interface ILoggingBroker
 	{
