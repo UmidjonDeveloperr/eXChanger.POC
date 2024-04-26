@@ -1,4 +1,5 @@
-﻿using eXChanger.POC.Models.Foundations.Persons;
+﻿using EFxceptions.Models.Exceptions;
+using eXChanger.POC.Models.Foundations.Persons;
 using eXChanger.POC.Models.Foundations.Persons.Exceptions;
 using Microsoft.Data.SqlClient;
 using System.Linq;
@@ -32,6 +33,13 @@ namespace eXChanger.POC.Services.Foundations.Persons
 					new FailedPersonStorageException(sqlException);
 
 				throw CreateAndLogCriticalException(failedGuestStorageException);
+			}
+			catch (DuplicateKeyException duplicateKeyException)
+			{
+				var alreadyExistGuestException =
+					new AlreadyExistPersonException(duplicateKeyException);
+
+				throw CreateAndLogDuplicateKeyException(alreadyExistGuestException);
 			}
 		}
 
