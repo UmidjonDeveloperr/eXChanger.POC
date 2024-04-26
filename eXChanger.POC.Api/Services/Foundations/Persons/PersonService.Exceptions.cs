@@ -2,6 +2,7 @@
 using eXChanger.POC.Models.Foundations.Persons;
 using eXChanger.POC.Models.Foundations.Persons.Exceptions;
 using Microsoft.Data.SqlClient;
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 using Xeptions;
@@ -40,6 +41,13 @@ namespace eXChanger.POC.Services.Foundations.Persons
 					new AlreadyExistPersonException(duplicateKeyException);
 
 				throw CreateAndLogDuplicateKeyException(alreadyExistGuestException);
+			}
+			catch (Exception exception)
+			{
+				var failedGuestServiceException =
+					new FailedPersonServiceException(exception);
+
+				throw CreateAndLogPersonDependencyServiceException(failedGuestServiceException);
 			}
 		}
 
