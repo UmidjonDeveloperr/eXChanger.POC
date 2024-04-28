@@ -15,6 +15,7 @@ using eXChanger.POC.Services.Processings.Pets;
 using eXChanger.POC.Services.Orchestrations.PersonPets;
 using eXChanger.POC.Services.Processings.Persons;
 using eXChanger.POC.Services.Processings.ExternalPersons;
+using eXChanger.POC.Brokers.Loggings;
 
 namespace eXChanger.POC
 {
@@ -74,6 +75,7 @@ namespace eXChanger.POC
 		{
 			services.AddTransient<IStorageBroker, StorageBroker>();
 			services.AddTransient<ISheetBroker, SheetBroker>();
+			services.AddTransient<ILoggingBroker, LoggingBroker>();
 		}
 
 		private static void AddFoundationServices(IServiceCollection services)
